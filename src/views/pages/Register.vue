@@ -1,5 +1,5 @@
 <script setup>
 </script>
 <template>
-  <RouterView/>
+    <h1>This is register</h1>
 </template>
