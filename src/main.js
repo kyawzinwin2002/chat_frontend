@@ -2,6 +2,7 @@ import { createApp } from "vue";
 import { createRouter, createWebHistory } from "vue-router";
 import "./style.css";
 import axios from "axios";
+import { createPinia } from "pinia";
 import App from "./App.vue";
 import Welcome from "./views/pages/Welcome.vue";
 import Register from "./views/pages/Register.vue";
@@ -12,6 +13,7 @@ axios.defaults.headers.common["Accept"] = "application/json";
 axios.defaults.withCredentials = true;
 axios.defaults.withXSRFToken = true;
 
+const pinia = createPinia();
 
 const routes = [
   {
@@ -34,5 +36,5 @@ const router = createRouter({
 });
 
 const app = createApp(App);
-app.use(router).mount("#app");
+app.use(router).use(pinia).mount("#app");
 

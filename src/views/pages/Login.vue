@@ -1,11 +1,14 @@
 <script setup>
 import axios from 'axios';
 import { reactive } from 'vue';
+import { useAuthStore } from "../../stores/authStore";
 
 const formData = reactive({
     email : null,
     password : null
 })
+
+const authStore = useAuthStore();
 
 const loginHandler = () => {
     axios.post("/login",{
@@ -13,7 +16,7 @@ const loginHandler = () => {
         password : formData.password
     })
         .then(response => {
-            console.log(response)
+            authStore.setAuthToken(response.data.data.token)
         })
         .catch(e => {
             console.log(e)
