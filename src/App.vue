@@ -1,5 +1,9 @@
 <script setup>
+import Nav from "./components/nav.vue";
 </script>
 <template>
-  <RouterView/>
+  <div >
+    <Nav/>
+    <RouterView/>
+  </div>
 </template>

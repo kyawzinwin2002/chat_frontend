@@ -9,6 +9,8 @@ import Login from "./views/pages/Login.vue";
 
 axios.defaults.baseURL = "http://localhost:8000/api/v1";
 axios.defaults.headers.common["Accept"] = "application/json";
+axios.defaults.withCredentials = true;
+axios.defaults.withXSRFToken = true;
 
 
 const routes = [
@@ -31,4 +33,6 @@ const router = createRouter({
   routes,
 });
 
-createApp(App).use(router).mount("#app");
+const app = createApp(App);
+app.use(router).mount("#app");
+
