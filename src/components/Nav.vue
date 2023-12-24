@@ -1,8 +1,25 @@
 <script setup>
+import axios from "axios";
 import Cookie from "js-cookie";
+import { useRouter } from "vue-router";
+import { useAuthStore } from "../stores/AuthStore";
 
-const user = JSON.parse(Cookie.get("user"));
+const router = useRouter();
+const authStore = useAuthStore();
 
+const logoutHandler = () => {
+    axios.get("/logout")
+        .then(res => {
+            console.log(res)
+            if(res.data.status){
+                authStore.removeAuthUser()
+                router.push("/login");
+            }
+        })
+        .catch(e => {
+            console.log(e)
+        })
+}
 </script>
 <template>
     <nav class="bg-white border-gray-200 dark:bg-gray-900">
@@ -20,10 +37,10 @@ const user = JSON.parse(Cookie.get("user"));
                 </svg>
             </button>
             <div class="hidden w-full md:block md:w-auto" id="navbar-default">
-                <ul v-if="Cookie.get('token')"
+                <ul v-if="authStore.authToken"
                     class="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
-                    <li>{{ user.name }}</li>
-                    <button>Logout</button>
+                    <li>{{ authStore?.user?.name }}</li>
+                    <button @click="logoutHandler">Logout</button>
                 </ul>
                 <ul v-else
                     class="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
