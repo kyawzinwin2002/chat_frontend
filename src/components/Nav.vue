@@ -1,4 +1,7 @@
 <script setup>
+import Cookie from "js-cookie";
+
+const user = JSON.parse(Cookie.get("user"));
 
 </script>
 <template>
@@ -17,23 +20,28 @@
                 </svg>
             </button>
             <div class="hidden w-full md:block md:w-auto" id="navbar-default">
-                <ul
+                <ul v-if="Cookie.get('token')"
+                    class="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+                    <li>{{ user.name }}</li>
+                    <button>Logout</button>
+                </ul>
+                <ul v-else
                     class="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
                     <li>
-                        <router-link 
-                            to="/login"
+                        <router-link to="/login"
                             class="block py-2 px-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white md:dark:text-blue-500"
                             aria-current="page">Login</router-link>
-                        
+
                     </li>
                     <li>
-                        <router-link 
-                            to="/register"
+                        <router-link to="/register"
                             class="block py-2 px-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white md:dark:text-blue-500"
                             aria-current="page">Register</router-link>
                     </li>
 
-            </ul>
+                </ul>
+
+            </div>
         </div>
-    </div>
-</nav></template>
+    </nav>
+</template>

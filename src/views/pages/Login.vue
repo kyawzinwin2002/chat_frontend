@@ -1,28 +1,36 @@
 <script setup>
 import axios from 'axios';
 import { reactive } from 'vue';
-import { useAuthStore } from "../../stores/authStore";
+import jsCookie from 'js-cookie';
 
 const formData = reactive({
     email: null,
     password: null
 })
 
-const authStore = useAuthStore();
-
-const loginHandler = () => {
-    axios.post("/login", {
-        email: formData.email,
-        password: formData.password
-    })
-        .then(response => {
-            authStore.setAuthToken(response.data.data.token)
+const getUser = () => {
+    axios.get("/user")
+        .then(res => {
+            jsCookie.set("user", JSON.stringify(res.data));
         })
         .catch(e => {
             console.log(e)
         })
 }
 
+const loginHandler = async () => {
+    await axios.post("/login", {
+        email: formData.email,
+        password: formData.password
+    })
+        .then(response => {
+            jsCookie.set("token", response.data.data.token);
+            getUser();
+        })
+        .catch(e => {
+            console.log(e)
+        })
+}
 
 </script>
 <template>
