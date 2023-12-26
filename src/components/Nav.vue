@@ -1,6 +1,5 @@
 <script setup>
 import axios from "axios";
-import Cookie from "js-cookie";
 import { useRouter } from "vue-router";
 import { useAuthStore } from "../stores/AuthStore";
 
