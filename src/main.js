@@ -6,6 +6,8 @@ import { createPinia } from "pinia";
 import App from "./App.vue";
 import router from "./routes";
 
+const pinia = createPinia();
+
 axios.defaults.baseURL = "http://localhost:8000/api/v1";
 axios.defaults.headers.common["Accept"] = "application/json";
 
@@ -23,8 +25,7 @@ axios.interceptors.request.use(
   }
 )
 
-const pinia = createPinia();
 
 const app = createApp(App);
-app.use(router).use(pinia).mount("#app");
+app.use(pinia).use(router).mount("#app");
 
