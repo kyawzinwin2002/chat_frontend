@@ -36,8 +36,7 @@ router.beforeEach((to, from, next) => {
 
     if (!authStore.authToken) {
       next({
-        path: "/",
-        query: { redirect: to.fullPath },
+        path: "/login",
       });
     } else {
       next();
