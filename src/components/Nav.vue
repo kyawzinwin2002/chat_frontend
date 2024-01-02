@@ -2,14 +2,15 @@
 import axios from "axios";
 import { useRouter } from "vue-router";
 import { useAuthStore } from "../stores/AuthStore";
+import { useRequestsStore } from "../stores/RequestsStore";
 
 const router = useRouter();
 const authStore = useAuthStore();
+const requestStore = useRequestsStore()
 
 const logoutHandler = () => {
     axios.get("/logout")
         .then(res => {
-            console.log(res)
             if(res.data.status){
                 authStore.removeAuthUser()
                 router.push("/login");
@@ -38,6 +39,22 @@ const logoutHandler = () => {
             <div class="hidden w-full md:block md:w-auto" id="navbar-default">
                 <ul v-if="authStore.authToken"
                     class="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+                    <li>
+                        <router-link to="/conversations"
+                            class="block py-2 px-3   rounded md:bg-transparent text-black md:p-0 dark: md:dark:text-blue-500"
+                            aria-current="page">Conversations</router-link>
+                    </li>
+                    <li>
+                        <router-link to="/friends"
+                            class="block py-2 px-3   rounded md:bg-transparent text-black md:p-0 dark:text-white md:dark:text-blue-500"
+                            aria-current="page">Friends</router-link>
+                    </li>
+                    <li>
+                        <router-link to="/requests"
+                            class="block py-2 px-3    rounded md:bg-transparent text-black md:p-0 dark:text-white md:dark:text-blue-500"
+                            aria-current="page">Requests <span v-if="requestStore.requests.length" class=" bg-red-500 text-white rounded-xl p-1">{{ requestStore.requests.length }}</span></router-link>
+
+                    </li>
                     <li>{{ authStore?.user?.name }}</li>
                     <button @click="logoutHandler">Logout</button>
                 </ul>
