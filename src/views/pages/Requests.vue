@@ -7,7 +7,7 @@ const requestStore = useRequestsStore();
 const contactStore = useContactStore();
 
 onMounted(() => {
-    requestStore.getRequests()
+    requestStore.getReceivedRequests();
 })
 
 const friendAcceptHandler = (sender_id) => {

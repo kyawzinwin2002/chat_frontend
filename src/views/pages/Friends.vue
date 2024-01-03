@@ -1,20 +1,36 @@
 <script setup>
 import { onMounted } from 'vue';
 import { useContactStore } from "../../stores/ContactStore";
-const friendsStore = useContactStore()
+import { useRequestsStore } from '../../stores/RequestsStore';
+const friendsStore = useContactStore();
+const requestStore = useRequestsStore();
 
 onMounted(() => {
     friendsStore.getFriendsList()
     friendsStore.getStrangers()
+    requestStore.getSentRequests()
 })
 
 const addFriendHandler = (id) => {
     friendsStore.addFriend(id);
+    requestStore.getSentRequests()
 }
 
 const unfriendHandler = (friend_id) => {
     friendsStore.unfriend(friend_id);
     friendsStore.getStrangers();
+}
+
+const sentOrNot = (receiver_id, receiver_email) => {
+    let result = requestStore.sentRequests.some(r => {
+        return r?.email == receiver_email && r?.id == receiver_id
+    })
+
+    return result;
+}
+
+const cancelRequestHandler = (receiver_id) => {
+    requestStore.deleteRequest(receiver_id);
 }
 
 </script>
@@ -40,7 +56,11 @@ const unfriendHandler = (friend_id) => {
             <div class=" border py-3 px-5  mb-2 rounded-lg flex justify-between items-center"
                 v-for="stranger in friendsStore.strangers" v-if="friendsStore.strangers.length > 0">
                 <h1>{{ stranger.name }}</h1>
-                <button @click="addFriendHandler(stranger.id)" class=" px-8 py-2 bg-blue-500 text-white rounded-lg">Add</button>
+                <button @click="cancelRequestHandler(stranger.id)" 
+                    v-if="sentOrNot(stranger.id,stranger.email)" 
+                    class=" px-8 py-2 bg-gray-500 text-white rounded-lg"
+                    >Cancel Request</button>
+                <button v-else @click="addFriendHandler(stranger.id)" class=" px-8 py-2 bg-blue-500 text-white rounded-lg">Add</button>
             </div>
         </div>
     </div>

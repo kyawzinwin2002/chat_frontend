@@ -4,12 +4,24 @@ import { ref } from "vue";
 
 export const useRequestsStore = defineStore("requests", () => {
     const requests = ref([]);
+    const sentRequests = ref([]);
 
-    function getRequests()
+    function getReceivedRequests()
     {
         axios.get("/requests")
             .then(res => {
                 requests.value = res?.data
+            })
+            .catch(e => {
+                console.log(e)
+            })
+    }
+
+    function getSentRequests()
+    {
+        axios.get("/requests/sent")
+            .then(res => {
+                sentRequests.value = res?.data;
             })
             .catch(e => {
                 console.log(e)
@@ -42,5 +54,5 @@ export const useRequestsStore = defineStore("requests", () => {
             })
     }
 
-    return { requests, getRequests, deleteRequest, accept }
+    return { requests, sentRequests, getReceivedRequests, getSentRequests, deleteRequest, accept }
 })
