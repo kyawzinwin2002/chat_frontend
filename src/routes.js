@@ -6,6 +6,7 @@ import LoginVue from "./views/pages/Login.vue";
 import Friends from "./views/pages/Friends.vue";
 import Conversations from "./views/pages/Conversations.vue";
 import Requests from "./views/pages/Requests.vue";
+import Chat from "./views/pages/Chat.vue";
 
 const routes = [
   {
@@ -33,6 +34,11 @@ const routes = [
   {
     path: "/requests",
     component: Requests,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: "/chat/:id",
+    component: Chat,
     meta: { requiresAuth: true }
   }
 ];
