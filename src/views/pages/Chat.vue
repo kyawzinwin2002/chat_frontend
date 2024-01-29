@@ -11,12 +11,10 @@ const conversationId = route?.params?.conId;
 
 onMounted(() => {
     messageStore.getMessages(conversationId);
-    console.log(conversationId)
 })
 
 window.Echo.private(`message.${conversationId}`).listen('.sendMessageEvent', function (data) {
-    //   messageStore.messages.push(JSON.stringify(data))
-    messageStore.getMessages(conversationId)
+      messageStore.messages.push(data.message)
 });
 
 </script>
@@ -24,7 +22,7 @@ window.Echo.private(`message.${conversationId}`).listen('.sendMessageEvent', fun
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white shadow-xl sm:rounded-lg">
-                <messageIndex :messages="messageStore.messages" />
+                <messageIndex  :messages="messageStore.messages" />
                 <messageInput :conversation_id="conversationId" />
             </div>
         </div>
