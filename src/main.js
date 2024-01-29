@@ -30,7 +30,7 @@ axios.interceptors.request.use(
 window.Pusher = Pusher;
 
 window.Echo = new Echo({
-  authEndpoint : 'http://localhost:8000/broadcasting/auth',
+  authEndpoint: "http://localhost:8000/broadcasting/auth",
   broadcaster: "pusher",
   key: "39d321e2203dcf5ae539",
   cluster: "ap1",
@@ -38,9 +38,9 @@ window.Echo = new Echo({
   encrypted: true,
   auth: {
     headers: {
-        Authorization: 'Bearer ' + Cookie.get("token")
+      Authorization: "Bearer " + Cookie.get("token"),
     },
-},
+  },
 });
 
 const app = createApp(App);

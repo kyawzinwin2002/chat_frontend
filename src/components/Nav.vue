@@ -11,7 +11,7 @@ const requestStore = useRequestsStore()
 const logoutHandler = () => {
     axios.get("/logout")
         .then(res => {
-            if(res.data.status){
+            if (res.data.status) {
                 authStore.removeAuthUser()
                 router.push("/login");
             }
@@ -52,7 +52,9 @@ const logoutHandler = () => {
                     <li>
                         <router-link to="/requests"
                             class="block py-2 px-3    rounded md:bg-transparent text-black md:p-0 dark:text-white md:dark:text-blue-500"
-                            aria-current="page">Requests <span v-if="requestStore.requests.length" class=" bg-red-500 text-white rounded-xl p-1">{{ requestStore.requests.length }}</span></router-link>
+                            aria-current="page">Requests <span v-if="requestStore.requests.length"
+                                class=" bg-red-500 text-white rounded-xl p-1">{{ requestStore.requests.length
+                                }}</span></router-link>
 
                     </li>
                     <li>{{ authStore?.user?.name }}</li>

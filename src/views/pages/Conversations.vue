@@ -2,10 +2,7 @@
 import { onMounted } from 'vue';
 import { useConversationsStore } from '../../stores/ConversationsStore';
 import { useAuthStore } from "../../stores/AuthStore";
-import Chat from './Chat.vue';
-import { useRouter } from 'vue-router';
 
-const router = useRouter();
 const conversationStore = useConversationsStore();
 const authStore = useAuthStore();
 
@@ -24,8 +21,7 @@ const authOrNot = (user_array) => {
             <h1 class=" text-xl font-semibold mb-3">Conversations</h1>
 
             <router-link v-for="conversation in conversationStore.conversations"
-                v-if="conversationStore.conversations?.length"
-                :to="{ path: `/chat/conversation/${conversation.id}` }"
+                v-if="conversationStore.conversations?.length" :to="{ path: `/chat/conversation/${conversation.id}` }"
                 class=" border py-3 px-5  mb-2 rounded-lg flex cursor-pointer justify-between items-center">{{
                     authOrNot(conversation?.users)[0]?.name }}
             </router-link>

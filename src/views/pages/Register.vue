@@ -31,7 +31,6 @@ const registerHandler = () => {
         });
 }
 
-
 </script>
 <template>
     <div class="h-screen flex flex-col gap-10 items-center justify-center">
@@ -50,7 +49,7 @@ const registerHandler = () => {
                 <input type="email" id="email" name="email" v-model="formData.email"
                     class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
                     placeholder="name@something.com" required>
-                    <span class="error text-red-500" v-if="responseErrors?.email">{{ responseErrors?.email }}</span>
+                <span class="error text-red-500" v-if="responseErrors?.email">{{ responseErrors?.email }}</span>
             </div>
             <div class="mb-5">
                 <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your
@@ -58,7 +57,7 @@ const registerHandler = () => {
                 <input type="password" id="password" v-model="formData.password"
                     class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
                     required>
-                    <span class="error text-red-500" v-if="responseErrors?.password">{{ responseErrors?.password }}</span>
+                <span class="error text-red-500" v-if="responseErrors?.password">{{ responseErrors?.password }}</span>
             </div>
             <div class="mb-5">
                 <label for="repeat-password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Confirm

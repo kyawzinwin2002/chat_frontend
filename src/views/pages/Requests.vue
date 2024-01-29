@@ -28,14 +28,16 @@ const deleteRequestHandler = (sender_id) => {
                 v-for="request in requestStore.requests" v-if="requestStore.requests.length > 0">
                 <h1>{{ request.name }}</h1>
                 <div class=" flex gap-3 items-center">
-                    <button @click="friendAcceptHandler(request.pivot.friend_id,request.id)" class=" px-8 py-2 bg-blue-500 text-white rounded-lg">Accept</button>
-                    <button @click="deleteRequestHandler(request.pivot.friend_id)" class=" px-8 py-2 bg-gray-500 text-white rounded-lg">Delete</button>
+                    <button @click="friendAcceptHandler(request.pivot.friend_id, request.id)"
+                        class=" px-8 py-2 bg-blue-500 text-white rounded-lg">Accept</button>
+                    <button @click="deleteRequestHandler(request.pivot.friend_id)"
+                        class=" px-8 py-2 bg-gray-500 text-white rounded-lg">Delete</button>
                 </div>
             </div>
             <div class="" v-else>
                 There is no request!
             </div>
         </div>
-       
+
     </div>
 </template>

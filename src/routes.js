@@ -29,18 +29,18 @@ const routes = [
   {
     path: "/conversations",
     component: Conversations,
-    meta: { requiresAuth: true }
+    meta: { requiresAuth: true },
   },
   {
     path: "/requests",
     component: Requests,
-    meta: { requiresAuth: true }
+    meta: { requiresAuth: true },
   },
   {
     path: "/chat/conversation/:conId",
     component: Chat,
-    meta: { requiresAuth: true }
-  }
+    meta: { requiresAuth: true },
+  },
 ];
 
 const router = createRouter({

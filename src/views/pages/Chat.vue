@@ -1,6 +1,6 @@
 <script setup>
 import { onMounted, ref } from 'vue';
-import {  useRoute } from 'vue-router';
+import { useRoute } from 'vue-router';
 import { useMessageStore } from "../../stores/MessageStore";
 import messageIndex from '../../components/message.index.vue';
 import messageInput from '../../components/message.input.vue';
@@ -14,9 +14,9 @@ onMounted(() => {
     console.log(conversationId)
 })
 
-window.Echo.private(`message.${conversationId}`).listen('.sendMessageEvent', function(data) {
-  messageStore.messages.push(JSON.stringify(data))
-// messageStore.getMessages(conversationId)
+window.Echo.private(`message.${conversationId}`).listen('.sendMessageEvent', function (data) {
+    //   messageStore.messages.push(JSON.stringify(data))
+    messageStore.getMessages(conversationId)
 });
 
 </script>
