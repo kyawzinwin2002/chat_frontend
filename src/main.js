@@ -5,6 +5,8 @@ import Cookie from "js-cookie";
 import { createPinia } from "pinia";
 import App from "./App.vue";
 import router from "./routes";
+import Echo from "laravel-echo";
+import Pusher from "pusher-js";
 
 const pinia = createPinia();
 
@@ -24,6 +26,22 @@ axios.interceptors.request.use(
     return Promise.reject(error);
   }
 );
+
+window.Pusher = Pusher;
+
+window.Echo = new Echo({
+  authEndpoint : 'http://localhost:8000/broadcasting/auth',
+  broadcaster: "pusher",
+  key: "39d321e2203dcf5ae539",
+  cluster: "ap1",
+  forceTLS: true,
+  encrypted: true,
+  auth: {
+    headers: {
+        Authorization: 'Bearer ' + Cookie.get("token")
+    },
+},
+});
 
 const app = createApp(App);
 app.use(pinia).use(router).mount("#app");

@@ -1,18 +1,38 @@
 <script setup>
+import { onMounted } from 'vue';
+import { useConversationsStore } from '../../stores/ConversationsStore';
+import { useAuthStore } from "../../stores/AuthStore";
+import Chat from './Chat.vue';
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
+const conversationStore = useConversationsStore();
+const authStore = useAuthStore();
+
+onMounted(() => {
+    conversationStore.getConversations()
+})
+
+const authOrNot = (user_array) => {
+    return user_array.filter((user) => user.id !== authStore.user.id);
+}
 
 </script>
 <template>
-     <div class=" w-screen h-screen flex flex-col items-center">
+    <div class=" w-screen h-screen flex flex-col items-center ">
         <div class=" my-5 w-[500px]">
-            <h1 class=" text-xl font-semibold mb-3">Friends</h1>
-            <div class=" border py-3 px-5  mb-2 rounded-lg flex justify-between items-center"
-                >
-                <h1>{{  }}</h1>
-                <button class=" px-8 py-2 bg-blue-500 text-white rounded-lg">Add</button>
-            </div>
-            <div class="" >
+            <h1 class=" text-xl font-semibold mb-3">Conversations</h1>
+
+            <router-link v-for="conversation in conversationStore.conversations"
+                v-if="conversationStore.conversations?.length"
+                :to="{ path: `/chat/conversation/${conversation.id}` }"
+                class=" border py-3 px-5  mb-2 rounded-lg flex cursor-pointer justify-between items-center">{{
+                    authOrNot(conversation?.users)[0]?.name }}
+            </router-link>
+
+            <div v-else class="">
                 There is no conversations! Let's talk with friends.
             </div>
         </div>
     </div>
-</template>
+</template>                                           

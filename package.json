@@ -12,7 +12,9 @@
     "axios": "^1.6.2",
     "flowbite": "^2.2.1",
     "js-cookie": "^3.0.5",
+    "laravel-echo": "^1.15.3",
     "pinia": "^2.1.7",
+    "pusher-js": "^8.4.0-rc2",
     "vue": "^3.3.11",
     "vue-router": "^4.2.5"
   },
