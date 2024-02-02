@@ -1,5 +1,5 @@
 <script setup>
-import { onBeforeMount, onMounted, ref } from 'vue';
+import { computed, onBeforeMount, onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import { useMessageStore } from "../../stores/MessageStore";
 import messageIndex from '../../components/message.index.vue';
@@ -9,25 +9,23 @@ const route = useRoute();
 const messageStore = useMessageStore();
 const conversationId = route?.params?.conId;
 
-const connectToPusher = () => { 
+const subscribeToPusher = () => {
     window.Echo.private(`message.${conversationId}`)
         .listen('.sendMessageEvent', function (data) {
-        messageStore.messages.unshift(data.message)
-    });
+            messageStore.messages.unshift(data.message)
+        });
 }
 
-const disconnectFromPusher = () => {
-    window.Echo.leave(`message.${conversationId}`);
-}
+window.Echo.connector.pusher.connection.bind("disconnected", () => {
+    window.Echo.connector.pusher.connect();
+})
 
 onMounted(() => {
     messageStore.getMessages(conversationId);
-    connectToPusher();
-})
+    subscribeToPusher();
+});
 
-onBeforeMount(() => {
-    disconnectFromPusher();
-})
+
 </script>
 <template>
     <div class="py-12">
