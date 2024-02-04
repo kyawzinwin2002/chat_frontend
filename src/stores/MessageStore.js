@@ -23,5 +23,15 @@ export const useMessageStore = defineStore("message", () => {
       });
   }
 
-  return { messages, getMessages, sendMessage };
+  function sendPhotoMessage(formData)
+  {
+    axios
+      .post("/message/send",formData)
+      .then((res) => {})
+      .catch((e) => {
+        console.log(e);
+      });
+  }
+
+  return { messages, getMessages, sendMessage, sendPhotoMessage };
 });
