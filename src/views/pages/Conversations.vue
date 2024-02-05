@@ -11,7 +11,7 @@ onMounted(() => {
 })
 
 const authOrNot = (user_array) => {
-    return user_array.filter((user) => user.id !== authStore.user.id);
+    return user_array.filter((user) => user?.id !== authStore?.user?.id);
 }
 
 </script>
