@@ -16,10 +16,12 @@ const routes = [
   {
     path: "/register",
     component: RegisterVue,
+    meta: { requiresGuest: true },
   },
   {
     path: "/login",
     component: LoginVue,
+    meta: { requiresGuest: true },
   },
   {
     path: "/friends",
@@ -56,6 +58,14 @@ router.beforeEach((to, from, next) => {
       next({
         path: "/login",
       });
+    } else {
+      next();
+    }
+  } else if (to.matched.some((record) => record.meta.requiresGuest)) {
+    const authStore = useAuthStore();
+
+    if (authStore.authToken) {
+      next({ path: "/conversations" }); 
     } else {
       next();
     }
