@@ -19,7 +19,6 @@ axios.interceptors.request.use(
     if (token) {
       config.headers["Authorization"] = `Bearer ${token}`;
     }
-
     return config;
   },
   (error) => {
@@ -27,21 +26,24 @@ axios.interceptors.request.use(
   }
 );
 
-window.Pusher = Pusher;
+const token = Cookie.get("token")
 
-window.Echo = new Echo({
-  authEndpoint: "http://localhost:8000/broadcasting/auth",
-  broadcaster: "pusher",
-  key: "39d321e2203dcf5ae539",
-  cluster: "ap1",
-  forceTLS: true,
-  encrypted: true,
-  auth: {
-    headers: {
-      Authorization: "Bearer " + Cookie.get("token"),
+  window.Pusher = Pusher;
+  
+  window.Echo = new Echo({
+    authEndpoint: "http://localhost:8000/broadcasting/auth",
+    broadcaster: "pusher",
+    key: "39d321e2203dcf5ae539",
+    cluster: "ap1",
+    forceTLS: true,
+    encrypted: true,
+    auth: {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     },
-  },
-});
+  });
+
 
 const app = createApp(App);
 app.use(pinia).use(router).mount("#app");

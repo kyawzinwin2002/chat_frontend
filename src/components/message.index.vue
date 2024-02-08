@@ -8,7 +8,7 @@ const messageContainer = ref(null)
 const messageRef = ref(null)
 
 const authOrNot = (sender_id) => {
-    return authStore.user.id == sender_id;
+    return authStore?.user?.id == sender_id;
 }
 
 </script>

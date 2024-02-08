@@ -1,9 +1,10 @@
 <script setup>
-import { computed, onBeforeMount, onMounted, ref } from 'vue';
+import { onBeforeUnmount, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 import { useMessageStore } from "../../stores/MessageStore";
 import messageIndex from '../../components/message.index.vue';
 import messageInput from '../../components/message.input.vue';
+import Cookie from 'js-cookie';
 
 const route = useRoute();
 const messageStore = useMessageStore();
@@ -17,14 +18,17 @@ const subscribeToPusher = () => {
 }
 
 window.Echo.connector.pusher.connection.bind("disconnected", () => {
-    window.Echo.connector.pusher.connect();
+    const state = window.Echo.connector.pusher.connection.state;
+    if (state != "connecting" && state != "connected") {
+        window.Echo.connector.pusher.connect();
+    }
 })
+
 
 onMounted(() => {
     messageStore.getMessages(conversationId);
-    subscribeToPusher();
+    subscribeToPusher()
 });
-
 
 </script>
 <template>
